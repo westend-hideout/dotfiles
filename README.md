@@ -51,3 +51,5 @@ nvim +PlugInstall +qall
 - Git の名前とメールアドレス: `~/.gitconfig`
 
 AWS profile、端末固有の PATH、認証情報などは共有設定に書かず、ローカル専用ファイルに置いてください。`setup.sh` は既存の設定ファイルを `~/.dotfiles-backup/` に退避してからリンクします。
+
+<!-- 芝の動作確認用の変更(README 一新時に削除予定) -->
