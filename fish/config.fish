@@ -5,9 +5,9 @@ else if test -x /usr/local/bin/brew
     eval (/usr/local/bin/brew shellenv)
 end
 
-# rbenv is optional; keep fish startup usable on machines without it.
-if command -q rbenv
-    rbenv init - fish | source
+# mise manages Ruby, Node, Python and other runtimes; keep fish usable without it.
+if command -q mise
+    mise activate fish | source
 end
 
 # Prefer Vim when installed; don't hard-code Apple's system Vim path.

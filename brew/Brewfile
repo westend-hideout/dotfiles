@@ -1,0 +1,24 @@
+# Core: installed on every Mac without asking.
+# Tools that may be unnecessary depending on the workplace (AWS, Docker, ...)
+# are optional and live in options/ instead.
+
+# Shell and git
+brew "fish"
+brew "gh"
+brew "git"
+
+# Search and data
+brew "ast-grep"
+brew "fd"
+brew "jq"
+brew "python-yq"
+brew "ripgrep"
+
+# Editors. ag is used by Unite grep and ctags by auto-ctags.vim.
+brew "neovim"
+brew "the_silver_searcher"
+brew "universal-ctags"
+
+# Used by install.sh: runtime versions and the option picker.
+brew "gum"
+brew "mise"

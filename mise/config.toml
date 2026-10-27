@@ -1,0 +1,5 @@
+# Global mise settings. Tool versions for each language live in
+# options/<lang>.mise.toml and are linked into ~/.config/mise/conf.d/.
+[settings]
+# Let projects keep using .ruby-version / .node-version / .python-version.
+idiomatic_version_file_enable_tools = ["ruby", "node", "python"]

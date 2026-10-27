@@ -1,0 +1,31 @@
+# id	group	label
+# Each id may have options/<id>.Brewfile and/or options/<id>.mise.toml.
+# Groups:
+#   Work  depends on the workplace (AWS, Docker, team tools)
+#   Lang  language runtimes managed by mise
+#   CLI   optional command-line tools
+#   App   optional GUI apps
+awscli	Work	AWS CLI
+spectral	Work	Spectral (OpenAPI linter)
+orbstack	Work	OrbStack
+docker-desktop	Work	Docker Desktop
+sequel-ace	Work	Sequel Ace
+slack	Work	Slack
+zoom	Work	Zoom
+ruby	Lang	Ruby
+node	Lang	Node.js + pnpm + yarn
+python	Lang	Python
+java	Lang	Java
+deno	Lang	Deno
+ccusage	CLI	ccusage (Claude Code usage)
+ghostty	App	Ghostty + JetBrains Mono
+iterm2	App	iTerm2
+vscode	App	Visual Studio Code + extensions
+cursor	App	Cursor
+google-chrome	App	Google Chrome
+brave-browser	App	Brave
+1password	App	1Password
+alfred	App	Alfred
+deepl	App	DeepL
+claude	App	Claude
+chatgpt	App	ChatGPT
