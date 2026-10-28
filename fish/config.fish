@@ -5,6 +5,10 @@ else if test -x /usr/local/bin/brew
     eval (/usr/local/bin/brew shellenv)
 end
 
+# Claude Code's official installer puts the claude command here.
+# --path changes $PATH for this session only, not the universal fish_user_paths.
+fish_add_path --path ~/.local/bin
+
 # mise manages Ruby, Node, Python and other runtimes; keep fish usable without it.
 if command -q mise
     mise activate fish | source
@@ -25,6 +29,11 @@ if status is-interactive
 end
 
 alias lsa 'ls -al'
+# Colors for ls -G, which fish's ls uses on macOS.
+set -x LSCOLORS gxfxcxdxbxegedabagacad
+
+# Claude Code also reads CLAUDE.md in directories added with --add-dir.
+set -x CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD 1
 
 function bind_bang
     switch (commandline -t)[-1]
