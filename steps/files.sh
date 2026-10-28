@@ -56,15 +56,15 @@ backup() {
 # Show how $2 differs from repository path $1. $3 is 1 when $2 has a marker line.
 show_diff() {
     if [ -L "$2" ] && [ ! -e "$2" ]; then
-        printf '  %s is a broken link to %s\n' "$2" "$(readlink "$2")"
+        printf '  %s は %s へのリンクですが、リンク先がありません\n' "$2" "$(readlink "$2")"
     elif [ -d "$2" ]; then
-        printf '  %s is a directory\n' "$2"
+        printf '  %s はディレクトリです\n' "$2"
     else
         if [ "$3" = 1 ]; then tail -n +2 "$2"; else cat "$2"; fi |
-            diff -u -L "$2 (current)" -L "$1 (repository)" - "$DOTFILES_ROOT/$1" |
+            diff -u -L "$2(今のファイル)" -L "$1(リポジトリ)" - "$DOTFILES_ROOT/$1" |
             awk -v max=60 '
                 NR <= max { print "    " $0 }
-                END { if (NR > max) printf "    ... %d more lines\n", NR - max }'
+                END { if (NR > max) printf "    …ほか %d 行\n", NR - max }'
     fi
 }
 
@@ -102,6 +102,7 @@ copy_file() {
             return
         fi
         reason="was edited here and the repository also changed"
+        reason_ja="コピーしたあとに手を加えていて、リポジトリ側も変わっています"
         has_marker=1
     else
         if [ -f "$target" ] && cmp -s "$target" "$DOTFILES_ROOT/$rel"; then
@@ -110,14 +111,29 @@ copy_file() {
             done_ "added marker to $target"
             return
         fi
-        reason="did not come from $ORIGIN"
-        has_marker=0
+        # A marker from here for another repository path means the file was
+        # renamed in the repository. If not edited since, only the marker is outdated.
+        if [ -f "$target" ] && head -n 1 "$target" | grep -qF " $ORIGIN: "; then
+            if tail -n +2 "$target" | cmp -s - "$DOTFILES_ROOT/$rel"; then
+                if is_check; then differs "$target: same content, marker will be updated to $rel"; return; fi
+                write_copy "$rel" "$target"
+                done_ "updated marker of $target to $rel"
+                return
+            fi
+            reason="was copied from $ORIGIN under another path and differs now"
+            reason_ja="このリポジトリから別の名前でコピーしたもので、今は中身が違います"
+            has_marker=1
+        else
+            reason="did not come from $ORIGIN"
+            reason_ja="このリポジトリからコピーしたものではありません(元からあったファイル)"
+            has_marker=0
+        fi
     fi
 
     if is_check; then differs "$target $reason (you will be asked)"; return; fi
-    printf '  %s %s:\n' "$target" "$reason"
+    printf '  %s は、%s。\n' "$target" "$reason_ja"
     show_diff "$rel" "$target" "$has_marker"
-    if ! choose_replace "  Overwrite $target?" "Skip (keep current file)" "Back up and overwrite"; then
+    if ! choose_replace "  $target を上書きしますか?" "スキップ(今のファイルを残す)" "バックアップしてから上書き"; then
         warn "kept $target"
         return
     fi
@@ -131,7 +147,7 @@ copy_file fish/conf.d/ghostty-theme.fish "$HOME/.config/fish/conf.d/ghostty-them
 copy_file nvim/init.vim "$HOME/.config/nvim/init.vim"
 copy_file colors/one.vim "$HOME/.config/nvim/colors/one.vim"
 copy_file ghostty/config "$HOME/.config/ghostty/config"
-copy_file mise/config.toml "$HOME/.config/mise/config.toml"
+copy_file mise/global.toml "$HOME/.config/mise/config.toml"
 copy_file uv/uv.toml "$HOME/.config/uv/uv.toml"
 
 # Tool versions of the chosen languages.

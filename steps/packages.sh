@@ -104,9 +104,9 @@ prepare_casks() {
                 differs "$message (you will be asked)"
                 continue
             fi
-            printf '  %s.\n' "$message"
-            if ! choose_replace "  Replace $app with Homebrew's version?" \
-                "Skip (keep current app)" "Move it to the Trash and install Homebrew's version"; then
+            printf '  %s は Homebrew 以外で入れたアプリです(今: %s、Homebrew: %s)。\n' "$app_path" "$current" "$latest"
+            if ! choose_replace "  $app を Homebrew の版で入れ直しますか?" \
+                "スキップ(今のアプリを残す)" "ゴミ箱に移して Homebrew で入れ直す"; then
                 warn "kept $app_path; skipped $cask"
                 return 1
             fi

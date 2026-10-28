@@ -36,7 +36,7 @@ while IFS="$(printf '\t')" read -r id group label; do
 done <"$DOTFILES_CATALOG"
 
 chosen=$(gum choose --no-limit --height 30 \
-    --header "Choose what to install (x or tab: toggle, enter: confirm)" \
+    --header "入れるものを選んでください(x か Tab で選択 / 解除、Enter で決定、スペースでは選べません)" \
     --selected "$preselected" "$@") || die "selection cancelled"
 
 mkdir -p "$DOTFILES_STATE_DIR"

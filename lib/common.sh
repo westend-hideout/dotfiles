@@ -17,16 +17,27 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
     fi
 done
 
-ok() { printf '  ok: %s\n' "$*"; }
-done_() { printf '  done: %s\n' "$*"; }
-warn() { printf '  warn: %s\n' "$*" >&2; }
+# ANSI colors, only when writing to a terminal and NO_COLOR is not set.
+# The terminal test must not run inside $(...), where stdout is a pipe.
+ESC=$(printf '\033')
+GREEN='' YELLOW='' CYAN='' BOLD='' RESET='' ERR_YELLOW='' ERR_RED='' ERR_RESET=''
+if [ -z "${NO_COLOR:-}" ] && [ -t 1 ]; then
+    GREEN="$ESC[32m" YELLOW="$ESC[33m" CYAN="$ESC[36m" BOLD="$ESC[1m" RESET="$ESC[0m"
+fi
+if [ -z "${NO_COLOR:-}" ] && [ -t 2 ]; then
+    ERR_YELLOW="$ESC[33m" ERR_RED="$ESC[31m" ERR_RESET="$ESC[0m"
+fi
+
+ok() { printf '  %sok:%s %s\n' "$GREEN" "$RESET" "$*"; }
+done_() { printf '  %sdone:%s %s\n' "$GREEN" "$RESET" "$*"; }
+warn() { printf '  %swarn:%s %s\n' "$ERR_YELLOW" "$ERR_RESET" "$*" >&2; }
 # Something worth knowing that is not a difference to apply.
-note() { printf '  note: %s\n' "$*"; }
-die() { printf '  error: %s\n' "$*" >&2; exit 2; }
+note() { printf '  %snote:%s %s\n' "$YELLOW" "$RESET" "$*"; }
+die() { printf '  %serror:%s %s\n' "$ERR_RED" "$ERR_RESET" "$*" >&2; exit 2; }
 
 # Used in check mode to report something apply would change.
 differs() {
-    printf '  differs: %s\n' "$*"
+    printf '  %sdiffers:%s %s\n' "$CYAN" "$RESET" "$*"
     drift=1
 }
 
@@ -50,7 +61,7 @@ choose_replace() {
         answer=$(gum choose --header "$1" "$2" "$3") || return 1
         [ "$answer" = "$3" ]
     else
-        confirm "$1 $3?"
+        confirm "$1(y: $3 / N: $2)"
     fi
 }
 
