@@ -72,6 +72,37 @@ Claude Code と Claude のデスクトップアプリは、公式のインスト
 - 選べるものの一覧は `options/catalog.tsv` です
 - 選択を外しても、入っているものをアンインストールはしません
 
+### CLI ツール
+
+Core(必ず入るもの):
+
+| ツール | 何をするか | 例 |
+|---|---|---|
+| fish | シェル | `fish_config`(ブラウザで設定画面を開く) |
+| git | バージョン管理 | `git switch -c feat/x` |
+| gh | GitHub を操作する(PR・Issue など) | `gh pr create --draft` |
+| delta | `git diff` を色付きで見やすく表示する | `git diff \| delta` |
+| gitleaks | API キーなどの秘密情報が入っていないか調べる | `gitleaks git`(リポジトリの履歴を調べる) |
+| ripgrep | ファイルの中身を高速に検索する | `rg -n 'TODO' app/` |
+| fd | ファイル名で高速に検索する | `fd -e rb user` |
+| ast-grep | コードを構文で検索・置換する | `ast-grep -p 'console.log($A)' -l ts` |
+| jq | JSON を取り出す・加工する | `jq '.dependencies' package.json` |
+| yq | YAML を取り出す・加工する(Go 版) | `yq '.services \| keys' compose.yml` |
+| Neovim | エディタ | `nvim file.rb`(エイリアス `v`) |
+| ctags | タグファイルを作る(Vim のタグジャンプ用) | `ctags -R .` |
+| shellcheck | シェルスクリプトの間違いを見つける | `shellcheck install.sh` |
+| mise | 言語ランタイムのバージョンを管理する | `mise use node@20`(今のディレクトリで Node 20 を使う) |
+| gum | シェルスクリプトで選択画面や確認を出す | `gum choose a b c` |
+
+選択式:
+
+| ツール | グループ | 何をするか | 例 |
+|---|---|---|---|
+| AWS CLI | Work | AWS を操作する | `aws sts get-caller-identity`(今の認証情報を確かめる) |
+| 1Password CLI | Work | 1Password から秘密情報を取り出す | `op read 'op://Private/GitHub/token'` |
+| Spectral | Work | OpenAPI の定義をチェックする | `spectral lint openapi.yaml`(ルールの `.spectral.yaml` が必要) |
+| ccusage | CLI | Claude Code の使用量を集計する | `ccusage daily` |
+
 ## 設定ファイル
 
 | リポジトリ | コピー先 |
