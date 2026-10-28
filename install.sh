@@ -17,8 +17,17 @@ DOTFILES_ROOT=$ROOT
 ALL_STEPS="homebrew select packages files mise shell editor"
 
 usage() {
-    sed -n '2,10s/^# \{0,1\}//p' "$0"
-    printf '\nsteps: %s\n' "$ALL_STEPS"
+    cat <<EOF
+この Mac をリポジトリの状態に揃えます。何度実行しても、揃っているものはスキップします。
+
+  ./install.sh                 差分を表示し、確認してから全部の手順を適用する
+  ./install.sh mise files      指定した手順だけ、同じように適用する
+  ./install.sh --check         差分を表示するだけ。何も変更しない
+  ./install.sh --reconfigure   入れるツールやアプリを選び直す
+  ./install.sh --yes           最初の確認を飛ばす(設定ファイルの上書きなどは飛ばさずに聞く)
+
+手順: $ALL_STEPS
+EOF
 }
 
 mode=apply
@@ -45,14 +54,15 @@ run_steps() {
     run_mode=$1
     run_drift=0
     for step in $steps; do
-        printf '==> %s\n' "$step"
+        printf '%s==> %s%s\n' "$BOLD" "$step" "$RESET"
         status=0
         DOTFILES_MODE=$run_mode DOTFILES_RECONFIGURE=$reconfigure sh "$ROOT/steps/$step.sh" || status=$?
         if [ "$status" -eq 3 ] && [ "$run_mode" = check ]; then
             run_drift=1
         elif [ "$status" -ne 0 ]; then
             # Later steps depend on earlier ones, so stop here. Rerunning resumes safely.
-            printf '\nFailed at step "%s". Fix the error above and run install.sh again.\n' "$step" >&2
+            printf '\n%sFailed at step "%s".%s Fix the error above and run install.sh again.\n' \
+                "$ERR_RED" "$step" "$ERR_RESET" >&2
             exit "$status"
         fi
     done
@@ -63,26 +73,26 @@ if [ "$mode" = check ]; then
     status=0
     run_steps check || status=$?
     if [ "$status" -eq 3 ]; then
-        printf '\nThis Mac differs from the repository. Run ./install.sh to apply.\n'
+        printf '\n%sリポジトリと違うところがあります。%s ./install.sh で適用できます。\n' "$CYAN" "$RESET"
         exit 1
     fi
-    printf '\nThis Mac matches the repository.\n'
+    printf '\n%sリポジトリの状態と揃っています。%s\n' "$GREEN" "$RESET"
     exit 0
 fi
 
 if [ "$yes" -ne 1 ]; then
-    printf 'Checking what will change. Nothing is changed yet.\n\n'
+    printf '変更される内容を確認します。まだ何も変更しません。\n\n'
     status=0
     run_steps check || status=$?
     if [ "$status" -eq 0 ]; then
-        printf '\nThis Mac already matches the repository. Nothing to do.\n'
+        printf '\n%sリポジトリの状態と揃っています。何もすることはありません。%s\n' "$GREEN" "$RESET"
         exit 0
     fi
-    printf '\nThe steps above marked "differs" will be applied.\n'
-    printf 'Packages of options chosen in the select step are installed too.\n\n'
-    confirm "Apply these changes?" || { printf 'Cancelled. Nothing was changed.\n'; exit 1; }
+    printf '\n上の「differs」の行が適用されます。\n'
+    printf 'select の手順で選んだツールやアプリも、あわせて入れます。\n\n'
+    confirm "適用しますか?" || { printf '中止しました。何も変更していません。\n'; exit 1; }
     printf '\n'
 fi
 
 run_steps apply
-printf '\nDone. Open a new terminal to load the settings.\n'
+printf '\n%s完了しました。%s 新しいターミナルを開くと、設定が読み込まれます。\n' "$GREEN" "$RESET"
