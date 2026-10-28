@@ -1,5 +1,6 @@
 #!/bin/sh
-# Install Homebrew. Its installer also installs the Xcode Command Line Tools (and git).
+# Check that Homebrew is installed. Installing it is left to the official
+# instructions at https://brew.sh/, so this step never runs an installer.
 set -eu
 # shellcheck source=../lib/common.sh
 . "$(dirname -- "$0")/../lib/common.sh"
@@ -7,10 +8,9 @@ set -eu
 if command -v brew >/dev/null 2>&1; then
     ok "Homebrew $(brew --version | head -n 1 | cut -d ' ' -f 2)"
 elif is_check; then
-    differs "Homebrew is not installed"
+    differs "Homebrew is not installed (install it from https://brew.sh/ja/)"
 else
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    done_ "installed Homebrew"
+    die "Homebrew is not installed. Install it with the command on https://brew.sh/ja/ and run install.sh again."
 fi
 
 finish

@@ -17,7 +17,7 @@ brew "ripgrep"
 # mikefarah/yq (Go). Conflicts with python-yq, which installs the same command.
 brew "yq"
 
-# Editors. rg (above) is used by Unite grep and ctags by auto-ctags.vim.
+# Editor. rg (above) is used by Unite grep and ctags for tag jumps.
 brew "neovim"
 brew "universal-ctags"
 

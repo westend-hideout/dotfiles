@@ -41,6 +41,19 @@ confirm() {
     case $answer in [yY] | [yY][eE][sS]) return 0 ;; *) return 1 ;; esac
 }
 
+# Ask with header $1 whether to keep things as they are ($2) or replace them ($3).
+# Returns 0 only when $3 is picked; the default, and the answer when there is
+# no terminal, is to keep.
+choose_replace() {
+    [ -t 0 ] && [ -t 1 ] || return 1
+    if command -v gum >/dev/null 2>&1; then
+        answer=$(gum choose --header "$1" "$2" "$3") || return 1
+        [ "$answer" = "$3" ]
+    else
+        confirm "$1 $3?"
+    fi
+}
+
 finish() {
     if is_check && [ "$drift" -ne 0 ]; then
         exit 3

@@ -25,7 +25,7 @@ ORIGIN=${ORIGIN:-dotfiles}
 short_hash() { shasum -a 256 | cut -c 1-12; }
 
 comment_prefix() {
-    case $1 in *.vim | */.vimrc) printf '"' ;; *) printf '#' ;; esac
+    case $1 in *.vim) printf '"' ;; *) printf '#' ;; esac
 }
 
 # Print the hash in the marker line of $1 if it was copied from repository path $2.
@@ -65,17 +65,6 @@ show_diff() {
             awk -v max=60 '
                 NR <= max { print "    " $0 }
                 END { if (NR > max) printf "    ... %d more lines\n", NR - max }'
-    fi
-}
-
-# Ask whether to overwrite. The default, and the answer without a terminal, is to keep.
-choose_overwrite() {
-    [ -t 0 ] && [ -t 1 ] || return 1
-    if command -v gum >/dev/null 2>&1; then
-        answer=$(gum choose --header "$1" "Skip (keep current file)" "Back up and overwrite") || return 1
-        [ "$answer" = "Back up and overwrite" ]
-    else
-        confirm "$1 Back up and overwrite?"
     fi
 }
 
@@ -128,7 +117,7 @@ copy_file() {
     if is_check; then differs "$target $reason (you will be asked)"; return; fi
     printf '  %s %s:\n' "$target" "$reason"
     show_diff "$rel" "$target" "$has_marker"
-    if ! choose_overwrite "  Overwrite $target?"; then
+    if ! choose_replace "  Overwrite $target?" "Skip (keep current file)" "Back up and overwrite"; then
         warn "kept $target"
         return
     fi
@@ -137,9 +126,8 @@ copy_file() {
     done_ "copied $rel -> $target"
 }
 
-copy_file .vimrc "$HOME/.vimrc"
-copy_file colors/one.vim "$HOME/.vim/colors/one.vim"
 copy_file fish/config.fish "$HOME/.config/fish/config.fish"
+copy_file fish/conf.d/ghostty-theme.fish "$HOME/.config/fish/conf.d/ghostty-theme.fish"
 copy_file nvim/init.vim "$HOME/.config/nvim/init.vim"
 copy_file colors/one.vim "$HOME/.config/nvim/colors/one.vim"
 copy_file ghostty/config "$HOME/.config/ghostty/config"
