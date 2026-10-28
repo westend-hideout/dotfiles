@@ -68,17 +68,6 @@ show_diff() {
     fi
 }
 
-# Ask whether to overwrite. The default, and the answer without a terminal, is to keep.
-choose_overwrite() {
-    [ -t 0 ] && [ -t 1 ] || return 1
-    if command -v gum >/dev/null 2>&1; then
-        answer=$(gum choose --header "$1" "Skip (keep current file)" "Back up and overwrite") || return 1
-        [ "$answer" = "Back up and overwrite" ]
-    else
-        confirm "$1 Back up and overwrite?"
-    fi
-}
-
 # Copy repository path $1 to $2.
 copy_file() {
     rel=$1
@@ -128,7 +117,7 @@ copy_file() {
     if is_check; then differs "$target $reason (you will be asked)"; return; fi
     printf '  %s %s:\n' "$target" "$reason"
     show_diff "$rel" "$target" "$has_marker"
-    if ! choose_overwrite "  Overwrite $target?"; then
+    if ! choose_replace "  Overwrite $target?" "Skip (keep current file)" "Back up and overwrite"; then
         warn "kept $target"
         return
     fi
