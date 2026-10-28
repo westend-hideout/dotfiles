@@ -126,7 +126,7 @@ Core(必ず入るもの):
 | `nvim/init.vim` | `~/.config/nvim/init.vim` |
 | `colors/one.vim` | `~/.config/nvim/colors/one.vim` |
 | `ghostty/config` | `~/.config/ghostty/config` |
-| `mise/config.toml` | `~/.config/mise/config.toml` |
+| `mise/global.toml` | `~/.config/mise/config.toml`(リポジトリの中で mise がプロジェクトの設定として読まないよう、別の名前にしている) |
 | `uv/uv.toml` | `~/.config/uv/uv.toml` |
 | `options/<言語>.mise.toml` | `~/.config/mise/conf.d/<言語>.toml`(選んだ言語だけ) |
 

@@ -110,8 +110,21 @@ copy_file() {
             done_ "added marker to $target"
             return
         fi
-        reason="did not come from $ORIGIN"
-        has_marker=0
+        # A marker from here for another repository path means the file was
+        # renamed in the repository. If not edited since, only the marker is outdated.
+        if [ -f "$target" ] && head -n 1 "$target" | grep -qF " $ORIGIN: "; then
+            if tail -n +2 "$target" | cmp -s - "$DOTFILES_ROOT/$rel"; then
+                if is_check; then differs "$target: same content, marker will be updated to $rel"; return; fi
+                write_copy "$rel" "$target"
+                done_ "updated marker of $target to $rel"
+                return
+            fi
+            reason="was copied from $ORIGIN under another path and differs now"
+            has_marker=1
+        else
+            reason="did not come from $ORIGIN"
+            has_marker=0
+        fi
     fi
 
     if is_check; then differs "$target $reason (you will be asked)"; return; fi
@@ -131,7 +144,7 @@ copy_file fish/conf.d/ghostty-theme.fish "$HOME/.config/fish/conf.d/ghostty-them
 copy_file nvim/init.vim "$HOME/.config/nvim/init.vim"
 copy_file colors/one.vim "$HOME/.config/nvim/colors/one.vim"
 copy_file ghostty/config "$HOME/.config/ghostty/config"
-copy_file mise/config.toml "$HOME/.config/mise/config.toml"
+copy_file mise/global.toml "$HOME/.config/mise/config.toml"
 copy_file uv/uv.toml "$HOME/.config/uv/uv.toml"
 
 # Tool versions of the chosen languages.
