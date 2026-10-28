@@ -1,6 +1,6 @@
 # dotfiles
 
-macOS の開発環境を作るためのリポジトリです。`./install.sh` を実行すると、Homebrew とツール、fish・Neovim・Vim・Ghostty の設定、言語ランタイム(mise)までを揃えます。
+macOS の開発環境を作るためのリポジトリです。`./install.sh` を実行すると、Homebrew とツール、fish・Neovim・Ghostty の設定、言語ランタイム(mise)までを揃えます。
 
 何度実行しても大丈夫です。揃っているものはスキップし、変更する前には何が変わるかを表示して確認します。
 
@@ -54,7 +54,7 @@ git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
 | `files` | 設定ファイルをコピーする(下の「設定ファイル」) |
 | `mise` | 選んだ言語のバージョンを入れる |
 | `shell` | fish をログインシェルにする |
-| `editor` | vim-plug を入れて、Vim / Neovim のプラグインを入れる |
+| `editor` | vim-plug を入れて、Neovim のプラグインを入れる |
 
 ## 入れるもの
 
@@ -88,8 +88,8 @@ Core(必ず入るもの):
 | ast-grep | コードを構文で検索・置換する | `ast-grep -p 'console.log($A)' -l ts` |
 | jq | JSON を取り出す・加工する | `jq '.dependencies' package.json` |
 | yq | YAML を取り出す・加工する(Go 版) | `yq '.services \| keys' compose.yml` |
-| Neovim | エディタ | `nvim file.rb`(エイリアス `v`) |
-| ctags | タグファイルを作る(Vim のタグジャンプ用) | `ctags -R .` |
+| Neovim | エディタ | `nvim file.rb`(エイリアス `v`・`vi`・`vim`) |
+| ctags | タグファイルを作る(Neovim のタグジャンプ用) | `ctags -R .` |
 | shellcheck | シェルスクリプトの間違いを見つける | `shellcheck install.sh` |
 | mise | 言語ランタイムのバージョンを管理する | `mise use node@20`(今のディレクトリで Node 20 を使う) |
 | gum | シェルスクリプトで選択画面や確認を出す | `gum choose a b c` |
@@ -108,13 +108,15 @@ Core(必ず入るもの):
 | リポジトリ | コピー先 |
 |---|---|
 | `fish/config.fish` | `~/.config/fish/config.fish` |
+| `fish/conf.d/ghostty-theme.fish` | `~/.config/fish/conf.d/ghostty-theme.fish`(リポジトリの `.ghostty-theme` に合わせて Ghostty のタイトルと色を変える) |
 | `nvim/init.vim` | `~/.config/nvim/init.vim` |
-| `.vimrc` | `~/.vimrc` |
-| `colors/one.vim` | `~/.config/nvim/colors/one.vim` と `~/.vim/colors/one.vim` |
+| `colors/one.vim` | `~/.config/nvim/colors/one.vim` |
 | `ghostty/config` | `~/.config/ghostty/config` |
 | `mise/config.toml` | `~/.config/mise/config.toml` |
 | `uv/uv.toml` | `~/.config/uv/uv.toml` |
 | `options/<言語>.mise.toml` | `~/.config/mise/conf.d/<言語>.toml`(選んだ言語だけ) |
+
+fish の色とプロンプトは、fish に入っているテーマ「ayu Mirage」とサンプルプロンプト「nim」を、`config.fish` で名前を指定して読み込んでいます。変えたいときは `fish_config theme list` / `fish_config prompt list` で名前を探して、`config.fish` を書き換えます。
 
 コピーしたファイルの 1 行目には、どこから来たかの印が入ります。
 

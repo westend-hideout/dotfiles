@@ -25,7 +25,7 @@ ORIGIN=${ORIGIN:-dotfiles}
 short_hash() { shasum -a 256 | cut -c 1-12; }
 
 comment_prefix() {
-    case $1 in *.vim | */.vimrc) printf '"' ;; *) printf '#' ;; esac
+    case $1 in *.vim) printf '"' ;; *) printf '#' ;; esac
 }
 
 # Print the hash in the marker line of $1 if it was copied from repository path $2.
@@ -137,9 +137,8 @@ copy_file() {
     done_ "copied $rel -> $target"
 }
 
-copy_file .vimrc "$HOME/.vimrc"
-copy_file colors/one.vim "$HOME/.vim/colors/one.vim"
 copy_file fish/config.fish "$HOME/.config/fish/config.fish"
+copy_file fish/conf.d/ghostty-theme.fish "$HOME/.config/fish/conf.d/ghostty-theme.fish"
 copy_file nvim/init.vim "$HOME/.config/nvim/init.vim"
 copy_file colors/one.vim "$HOME/.config/nvim/colors/one.vim"
 copy_file ghostty/config "$HOME/.config/ghostty/config"

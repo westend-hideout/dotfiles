@@ -10,14 +10,18 @@ if command -q mise
     mise activate fish | source
 end
 
-# Prefer Vim when installed; don't hard-code Apple's system Vim path.
-if command -q vim
-    alias vi vim
-end
-
-# Short command for the Neovim setup managed in this repository.
+# Neovim is the only editor set up by this repository; vi and vim open it too.
 if command -q nvim
     alias v nvim
+    alias vi nvim
+    alias vim nvim
+end
+
+# Colors and prompt are fish's bundled ones, chosen by name instead of being
+# saved to universal variables or functions/fish_prompt.fish.
+if status is-interactive
+    fish_config theme choose "ayu Mirage"
+    fish_config prompt choose nim
 end
 
 alias lsa 'ls -al'
