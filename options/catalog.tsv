@@ -6,6 +6,7 @@
 #   CLI   optional command-line tools
 #   App   optional GUI apps
 awscli	Work	AWS CLI
+1password-cli	Work	1Password CLI (op)
 spectral	Work	Spectral (OpenAPI linter)
 orbstack	Work	OrbStack
 docker-desktop	Work	Docker Desktop
@@ -14,10 +15,11 @@ slack	Work	Slack
 zoom	Work	Zoom
 ruby	Lang	Ruby
 node	Lang	Node.js + pnpm + yarn
-python	Lang	Python
+python	Lang	Python + uv
 java	Lang	Java
 deno	Lang	Deno
 ccusage	CLI	ccusage (Claude Code usage)
+glow	CLI	glow (Markdown viewer)
 ghostty	App	Ghostty + JetBrains Mono
 iterm2	App	iTerm2
 vscode	App	Visual Studio Code + extensions
@@ -25,5 +27,4 @@ google-chrome	App	Google Chrome
 brave-browser	App	Brave
 1password	App	1Password
 deepl	App	DeepL
-claude	App	Claude
 chatgpt	App	ChatGPT

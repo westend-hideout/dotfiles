@@ -60,11 +60,13 @@ git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
 
 | グループ | 中身 | 扱い |
 |---|---|---|
-| Core | fish・git・gh・ripgrep・fd・jq・ast-grep・yq(Go 版)・Neovim・ctags・mise・gum | 必ず入れる |
-| Work | AWS CLI・Spectral・OrbStack・Docker Desktop・Sequel Ace・Slack・Zoom | 選ぶ。職場によって要らないもの |
-| Lang | Ruby・Node.js(+ pnpm・yarn)・Python・Java・Deno | 選ぶ。mise で入れる |
-| CLI | ccusage | 選ぶ |
-| App | Ghostty・iTerm2・VS Code・Chrome・Brave・1Password・DeepL・Claude・ChatGPT | 選ぶ |
+| Core | fish・git・gh・delta・gitleaks・ripgrep・fd・jq・ast-grep・yq(Go 版)・Neovim・ctags・shellcheck・mise・gum | 必ず入れる |
+| Work | AWS CLI・1Password CLI・Spectral・OrbStack・Docker Desktop・Sequel Ace・Slack・Zoom | 選ぶ。職場によって要らないもの |
+| Lang | Ruby・Node.js(+ pnpm・yarn)・Python(+ uv)・Java・Deno | 選ぶ。mise で入れる |
+| CLI | ccusage・glow | 選ぶ |
+| App | Ghostty・iTerm2・VS Code・Chrome・Brave・1Password・DeepL・ChatGPT | 選ぶ |
+
+Claude Code と Claude のデスクトップアプリは、公式のインストーラで入れます(自動で更新されます)。
 
 - Core は `brew/Brewfile` に書いてあります
 - 選べるものの一覧は `options/catalog.tsv` です
@@ -80,6 +82,7 @@ git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
 | `colors/one.vim` | `~/.config/nvim/colors/one.vim` と `~/.vim/colors/one.vim` |
 | `ghostty/config` | `~/.config/ghostty/config` |
 | `mise/config.toml` | `~/.config/mise/config.toml` |
+| `uv/uv.toml` | `~/.config/uv/uv.toml` |
 | `options/<言語>.mise.toml` | `~/.config/mise/conf.d/<言語>.toml`(選んだ言語だけ) |
 
 コピーしたファイルの 1 行目には、どこから来たかの印が入ります。

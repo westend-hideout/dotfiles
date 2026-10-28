@@ -1,0 +1,4 @@
+# Python versions are managed by mise. uv only manages packages, venvs and
+# tools (uvx), and never installs a Python of its own.
+python-preference = "only-system"
+python-downloads = "manual"

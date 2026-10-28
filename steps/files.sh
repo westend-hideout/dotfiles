@@ -144,6 +144,7 @@ copy_file nvim/init.vim "$HOME/.config/nvim/init.vim"
 copy_file colors/one.vim "$HOME/.config/nvim/colors/one.vim"
 copy_file ghostty/config "$HOME/.config/ghostty/config"
 copy_file mise/config.toml "$HOME/.config/mise/config.toml"
+copy_file uv/uv.toml "$HOME/.config/uv/uv.toml"
 
 # Tool versions of the chosen languages.
 for id in $(selected_options); do
