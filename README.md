@@ -1,23 +1,24 @@
 # dotfiles
 
-macOS の開発環境を作るためのリポジトリです。`./install.sh` を実行すると、Homebrew とツール、fish・Neovim・Ghostty の設定、言語ランタイム(mise)までを揃えます。
+macOS の開発環境を作るためのリポジトリです。`./install.sh` を実行すると、Homebrew で入れるツール、fish・Neovim・Ghostty の設定、言語ランタイム(mise)までを揃えます。
 
 何度実行しても大丈夫です。揃っているものはスキップし、変更する前には何が変わるかを表示して確認します。
 
 ## 新しい Mac でのセットアップ
 
-```sh
-# 1. Homebrew を入れる(Xcode Command Line Tools と git も一緒に入ります)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+1. **Homebrew を入れる**
 
-# 2. このリポジトリを取ってくる(置き場所はどこでも構いません)
-git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
+   [Homebrew の公式サイト](https://brew.sh/ja/)に載っているインストール用のコマンドを実行します。Xcode Command Line Tools と git も一緒に入ります。
 
-# 3. セットアップする
-~/my_work/dotfiles/install.sh
-```
+2. **このリポジトリを取ってきて、セットアップする**
 
-`install.sh` も、Homebrew がなければ入れるようになっています。ただ、2 の `git clone` には git が必要なので、先に 1 を実行してください。
+   ```sh
+   # 置き場所はどこでも構いません
+   git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
+   ~/my_work/dotfiles/install.sh
+   ```
+
+`install.sh` は Homebrew を入れません。Homebrew がないときは、公式サイトの URL を表示して止まります。
 
 途中で聞かれるのは次のものです。
 
@@ -48,7 +49,7 @@ git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
 
 | 手順 | やること |
 |---|---|
-| `homebrew` | Homebrew がなければ入れる |
+| `homebrew` | Homebrew が入っているか確かめる。なければ公式サイトの URL を表示して止まる |
 | `select` | 入れるツールやアプリを選ぶ。選んだ内容は `~/.config/dotfiles/options` に保存し、2 回目からは聞かない |
 | `packages` | Core の Brewfile と、選んだものの Brewfile を `brew bundle` で入れる。古いものは更新する |
 | `files` | 設定ファイルをコピーする(下の「設定ファイル」) |

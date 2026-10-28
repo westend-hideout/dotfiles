@@ -6,7 +6,7 @@ set -eu
 
 command -v brew >/dev/null 2>&1 || {
     is_check && { differs "Homebrew is not installed"; finish; }
-    die "Homebrew is not installed (run the homebrew step first)"
+    die "Homebrew is not installed (install it from https://brew.sh/ja/)"
 }
 fish_path="$(brew --prefix)/bin/fish"
 [ -x "$fish_path" ] || {
