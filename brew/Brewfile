@@ -1,0 +1,29 @@
+# Core: installed on every Mac without asking.
+# Tools that may be unnecessary depending on the workplace (AWS, Docker, ...)
+# are optional and live in options/ instead.
+
+# Shell and git. delta shows diffs readably; gitleaks finds secrets before commit.
+brew "fish"
+brew "gh"
+brew "git"
+brew "git-delta"
+brew "gitleaks"
+
+# Search and data
+brew "ast-grep"
+brew "fd"
+brew "jq"
+brew "ripgrep"
+# mikefarah/yq (Go). Conflicts with python-yq, which installs the same command.
+brew "yq"
+
+# Editors. rg (above) is used by Unite grep and ctags by auto-ctags.vim.
+brew "neovim"
+brew "universal-ctags"
+
+# Linting shell scripts, including the ones in this repository.
+brew "shellcheck"
+
+# Used by install.sh: runtime versions and the option picker.
+brew "gum"
+brew "mise"

@@ -1,0 +1,4 @@
+[tools]
+python = "3.14.5"
+# uv manages packages and tools (uvx); Python itself comes from mise (see uv/uv.toml).
+uv = "latest"

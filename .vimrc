@@ -63,10 +63,10 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
   au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
   au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
-  " unite grep に ag(The Silver Searcher) を使う
-  if executable('ag')
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  " unite grep に rg(ripgrep) を使う
+  if executable('rg')
+    let g:unite_source_grep_command = 'rg'
+    let g:unite_source_grep_default_opts = '--vimgrep --color never'
     let g:unite_source_grep_recursive_opt = ''
   endif
 
