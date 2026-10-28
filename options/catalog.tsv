@@ -19,7 +19,6 @@ python	Lang	Python + uv
 java	Lang	Java
 deno	Lang	Deno
 ccusage	CLI	ccusage (Claude Code usage)
-glow	CLI	glow (Markdown viewer)
 ghostty	App	Ghostty + JetBrains Mono
 iterm2	App	iTerm2
 vscode	App	Visual Studio Code + extensions
