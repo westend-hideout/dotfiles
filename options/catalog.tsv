@@ -21,11 +21,9 @@ ccusage	CLI	ccusage (Claude Code usage)
 ghostty	App	Ghostty + JetBrains Mono
 iterm2	App	iTerm2
 vscode	App	Visual Studio Code + extensions
-cursor	App	Cursor
 google-chrome	App	Google Chrome
 brave-browser	App	Brave
 1password	App	1Password
-alfred	App	Alfred
 deepl	App	DeepL
 claude	App	Claude
 chatgpt	App	ChatGPT

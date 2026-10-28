@@ -11,6 +11,25 @@ command -v brew >/dev/null 2>&1 || {
     die "Homebrew is not installed (run the homebrew step first)"
 }
 
+# Formulae replaced by one in a Brewfile that installs the same command.
+# brew bundle cannot install the new one while the old one is installed,
+# and uninstalling is left to the user. Format: "old new".
+REPLACED="python-yq yq"
+
+check_replaced() {
+    # A here-document keeps the loop in this shell so differs and die take effect.
+    while read -r old new; do
+        brew list --formula "$old" >/dev/null 2>&1 || continue
+        if is_check; then
+            differs "$old is installed and conflicts with $new (run: brew uninstall $old)"
+        else
+            die "$old conflicts with $new in the Brewfile. Run 'brew uninstall $old' and rerun."
+        fi
+    done <<EOF
+$REPLACED
+EOF
+}
+
 bundle() {
     brewfile=$1
     name=${brewfile#"$DOTFILES_ROOT"/}
@@ -53,6 +72,7 @@ report_unlisted() {
     [ -z "$unlisted" ] || note "installed but not in any Brewfile: $unlisted"
 }
 
+check_replaced
 bundle "$DOTFILES_ROOT/brew/Brewfile"
 for id in $(selected_options); do
     brewfile="$DOTFILES_ROOT/options/$id.Brewfile"

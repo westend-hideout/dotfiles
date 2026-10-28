@@ -11,12 +11,12 @@ brew "git"
 brew "ast-grep"
 brew "fd"
 brew "jq"
-brew "python-yq"
 brew "ripgrep"
+# mikefarah/yq (Go). Conflicts with python-yq, which installs the same command.
+brew "yq"
 
-# Editors. ag is used by Unite grep and ctags by auto-ctags.vim.
+# Editors. rg (above) is used by Unite grep and ctags by auto-ctags.vim.
 brew "neovim"
-brew "the_silver_searcher"
 brew "universal-ctags"
 
 # Used by install.sh: runtime versions and the option picker.

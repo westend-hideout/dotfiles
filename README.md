@@ -60,11 +60,11 @@ git clone https://github.com/westend-hideout/dotfiles.git ~/my_work/dotfiles
 
 | グループ | 中身 | 扱い |
 |---|---|---|
-| Core | fish・git・gh・ripgrep・fd・jq・ast-grep・yq・Neovim・ag・ctags・mise・gum | 必ず入れる |
+| Core | fish・git・gh・ripgrep・fd・jq・ast-grep・yq(Go 版)・Neovim・ctags・mise・gum | 必ず入れる |
 | Work | AWS CLI・Spectral・OrbStack・Docker Desktop・Sequel Ace・Slack・Zoom | 選ぶ。職場によって要らないもの |
 | Lang | Ruby・Node.js(+ pnpm・yarn)・Python・Java・Deno | 選ぶ。mise で入れる |
 | CLI | ccusage | 選ぶ |
-| App | Ghostty・iTerm2・VS Code・Cursor・Chrome・Brave・1Password・Alfred・DeepL・Claude・ChatGPT | 選ぶ |
+| App | Ghostty・iTerm2・VS Code・Chrome・Brave・1Password・DeepL・Claude・ChatGPT | 選ぶ |
 
 - Core は `brew/Brewfile` に書いてあります
 - 選べるものの一覧は `options/catalog.tsv` です
